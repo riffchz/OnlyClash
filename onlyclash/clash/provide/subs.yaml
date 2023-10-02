@@ -1,0 +1,14 @@
+proxies:
+- name: example
+  server: google.com
+  port: 443
+  type: trojan
+  password: ahsidne84j4r8rn
+  sni: host.com
+  skip-cert-verify: true
+  udp: true
+  network: ws
+  ws-opts:
+    path: /trojan-ws
+    headers:
+      Host: host.com

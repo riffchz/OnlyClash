@@ -1,0 +1,27 @@
+allow-lan: true
+bind-address: '*'
+dns:
+    default-nameserver:
+        - 8.8.8.8
+        - 1.1.1.1
+    enable: true
+    enhanced-mode: fake-ip
+    listen: 127.0.0.1:9897
+    nameserver:
+        - 223.5.5.5
+external-controller: 0.0.0.0:9090
+external-ui: /data/adb/onlyclash/clash/dashboard
+force-keep-conn: false
+force-to-keep-value: quiz.int.vidio.com
+ipv6: false
+log-level: warning
+sniffer:
+    enable: true
+    sniff:
+        HTTP:
+            ports:
+                - 80
+        TLS:
+            ports:
+                - 443
+tproxy-port: 9898

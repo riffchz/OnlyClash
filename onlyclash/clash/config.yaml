@@ -1,0 +1,67 @@
+allow-lan: true
+bind-address: '*'
+dns:
+    default-nameserver:
+        - 8.8.8.8
+        - 1.1.1.1
+    enable: true
+    enhanced-mode: fake-ip
+    listen: 127.0.0.1:9897
+    nameserver:
+        - 223.5.5.5
+external-controller: 0.0.0.0:9090
+external-ui: /data/adb/onlyclash/clash/dashboard
+ipv6: false
+log-level: warning
+mode: rule
+profile:
+    store-fake-ip: false
+    store-selected: true
+proxies: null
+proxy-groups:
+    - name: PROXY
+      proxies:
+        - FALLBACK
+        - URL-TEST
+      type: select
+      use:
+        - provide
+    - name: FALLBACK
+      type: fallback
+      use:
+        - provide
+    - name: URL-TEST
+      type: url-test
+      use:
+        - provide
+proxy-providers:
+    provide:
+        health-check:
+            enable: true
+            interval: 3600
+            url: http://www.gstatic.com/generate_204
+        path: ./provide/subs.yaml
+        type: file
+rules:
+    - AND,((NETWORK,TCP),(DST-PORT,5228-5230)),DIRECT
+    - AND,((NETWORK,TCP),(DST-PORT,5228-5230),(OR,((DOMAIN-KEYWORD,google)))),DIRECT
+    - AND,((NETWORK,udp),(OR,((DST-PORT,443/80),(GEOSITE,youtube)))),REJECT
+    - AND,((NETWORK,udp),(GEOSITE,youtube)),REJECT
+    - IP-CIDR,127.0.0.1/32,REJECT,no-resolve
+    - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+    - IP-CIDR,28.0.0.1/8,REJECT,no-resolve
+    - IP-CIDR6,::1/128,REJECT,no-resolve
+    - IP-CIDR,255.255.255.0/24,REJECT,no-resolve
+    - GEOIP,telegram,PROXY
+    - GEOSITE,telegram,PROXY
+    - MATCH,PROXY
+sniffer:
+    enable: true
+    sniff:
+        HTTP:
+            ports:
+                - 80
+        TLS:
+            ports:
+                - 443
+tproxy-port: 9898
