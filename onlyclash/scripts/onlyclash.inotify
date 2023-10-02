@@ -1,0 +1,28 @@
+#!/system/bin/sh
+
+onlyclash_dir=/data/adb/modules/onlyclash/system/bin/onlyclash
+events=$1
+monitor_dir=$2
+monitor_file=$3
+
+start_onlyclash() {
+	${onlyclash_dir} -start
+}
+
+stop_onlyclash() {
+	${onlyclash_dir} -stop
+}
+
+main() {
+	if [ ! -f /data/adb/onlyclash/manual ]; then
+		if [ "${monitor_file}" = "disable" ]; then
+			if [ "${events}" = "d" ]; then
+				start_onlyclash
+			elif [ "${events}" = "n" ]; then
+				stop_onlyclash
+			fi
+		fi
+	fi
+}
+
+main
