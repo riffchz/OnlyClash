@@ -22,7 +22,8 @@ A: Buka /data/adb/onlyclash/template.yaml
 
 Cara install:
 ```
-Dowload source code.zip di release, flash di magisk/ksu
+Dowload source code.zip di release
+flash di magisk/ksu
 Selesai.
 ```
 
